@@ -1,0 +1,1223 @@
+swagger: "2.0"
+info:
+  description: "This is the api for the Tarjeta General V2.X.X"
+  version: "2.0.X"
+  title: "Tarjeta General"
+  termsOfService: "http://insite.com.co/"
+  contact:
+    email: "iot@insite.com.co"
+  license:
+    name: "Closed"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "swagger.io"
+basePath: "/"
+tags:
+- name: "HTML"
+  description: "This is the api to get all HTML pages"
+- name: "Ping Sensor"
+  description: "IR commands"
+- name: "Device info"
+  description: "Get all info of the device"
+- name: "Network"
+  description: "Configure the device network API"
+- name: "Schedule"
+  description: "Schedule api"
+- name: "Device actions"
+  description: "Get functions of device actions"
+- name: "Configurations"
+  description: "Get functions of device actions"
+- name: "IR"
+  description: "IR commands"
+
+schemes:
+- "http"
+
+paths:
+  /:
+    get:
+      tags:
+      - "HTML"
+      summary: "Return the HTML of the configuration panel"
+      description: "Here you can change the shades tipes. Set the timeout and configure the http requests."
+      operationId: "getMainHTML"
+      consumes:
+      - "text/html"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Return HTML"
+  /configurations:
+    get:
+      tags:
+      - "HTML"
+      summary: "Return the HTML of the WIFI configuration panel"
+      description: "This screen is used to change the network configurations, such as the AP which the device is connected."
+      operationId: "getConfigurationsHTML"
+      consumes:
+      - "text/html"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Return HTML"
+  /schedule:
+    get:
+      tags:
+      - "HTML"
+      summary: "Return the HTML of schedule pannel"
+      description: "In this screen you can modify the schedule of the shades. You can only have maximum 10 schedules"
+      operationId: "getScheduleHTML"
+      consumes:
+      - "text/html"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Return HTML"
+  /ping-sensor:
+    get:
+      tags:
+      - "HTML"
+      summary: "Return the HTML of ping sensor"
+      description: ""
+      operationId: "getPingSensorHTML"
+      consumes:
+      - "text/html"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "Return HTML"
+  /api/v2/ping-sensor/info:
+    get:
+      tags:
+      - "Ping Sensor"
+      summary: "Get ping sensor info"
+      description: ""
+      operationId: "pingInfo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/pingSensorInfo"
+  /api/v2/ping-sensor/switch:
+    get:
+      tags:
+      - "Ping Sensor"
+      summary: "Switch ping sensor state"
+      description: "If the ping sensor is off call this api will turn it on and vice versa"
+      operationId: "pingSwitch"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/pingSensorInfo"
+  /api/v2/ping-sensor:
+    post:
+      tags:
+      - "Ping Sensor"
+      summary: "Edit ping sensor values"
+      description: "Call this api with the required arguments and modify the device values"
+      operationId: "editPingSensor"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/editPingSensor"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/pingSensorInfo"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api-version:
+    get:
+      tags:
+      - "Device info"
+      summary: "Return the api version in json"
+      description: "This version is the current api, the number returned here is the number you should use int he url after /api/v# "
+      operationId: "apiVersion"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiVersion"
+  /reboot:
+    get:
+      tags:
+      - "Device info"
+      summary: "Reboot the system"
+      description: "Calling this api the device will reboot the system"
+      operationId: "reboot"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+  /reset:
+    get:
+      tags:
+      - "Device info"
+      summary: "Factory reset the system"
+      description: "Calling this api device wirr ERASE all the configuration and became a factory device."
+      operationId: "reset"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+  /firmware-update:
+    get:
+      tags:
+      - "Device info"
+      summary: "Update device firmware"
+      description: "If the device has internet connection and has been authenticated on Intelligence server, this method will call the manual firmware update and the device will try to update if there is a new firmware version."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+  /info:
+    get:
+      tags:
+      - "Device info"
+      summary: "Get all info of the device"
+      description: "This API returns a json with all the information about the device"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/info"
+  /api/v2/version:
+    get:
+      tags:
+      - "Device info"
+      summary: "get the current firmware version"
+      description: "Get a json with the current firmware version"
+      operationId: "getFwVersion"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/fwVersion"
+  /api/v2/time:
+    get:
+      tags:
+      - "Device info"
+      summary: "get the current date the device"
+      description: "get the current date the device"
+      operationId: "getTime"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/getTime"
+  /network/scan:
+    get:
+      tags:
+      - "Network"
+      summary: "Get all networks nearby"
+      description: "This api calls the scan method of the device and return an object with the closer ap"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/networkScan"
+  /network/set-wifi:
+    post:
+      tags:
+      - "Network"
+      summary: "Get all networks nearby"
+      description: "This api calls the scan method of the device and return an object with the closer ap"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/setWifi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/schedule:
+    get:
+      tags:
+      - "Schedule"
+      summary: "Get all schedule of the device in array"
+      description: "Get the Array with all the schedules information"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/allSchedules"
+    post:
+      tags:
+      - "Schedule"
+      summary: "Create a new schedule"
+      description: "Call this api with the body arguments to create a new schedule on the device"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/setSchedule"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/setScheduleRet"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+    delete:
+      tags:
+      - "Schedule"
+      summary: "Deletes a schedule"
+      description: "Send the schedule Id to remove it"
+      operationId: "deleteSchedule"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "scheduleId"
+        in: "path"
+        description: "Schedule id to delete. /api/v2/schedule/{scheduleID}"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/successDeleteSchedule"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/move/{direction}:
+    get:
+      tags:
+      - "Device actions"
+      summary: "Move one of the device relays"
+      description: "This will activate one of the relays"
+      operationId: "moveRelay"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "direction"
+        in: "path"
+        description: "The relay you want to move"
+        required: true
+        type: "integer"
+        format: "int64"
+        enum: [0,1,2]
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+  /api/v2/stop/:
+    get:
+      tags:
+      - "Device actions"
+      summary: "Stop all relays"
+      description: "This will stop all relays"
+      operationId: "stopRelay"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+  /api/v2/invert-direction/:
+    get:
+      tags:
+      - "Configurations"
+      summary: "Invert the logic of relays"
+      description: "Invert the relays on the edges, changing the 0 to the other relay and the one to the other end of the device. The relay 2 always be in the middle"
+      operationId: "invertRelay"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+  /api/v2/configurations/:
+    get:
+      tags:
+      - "Configurations"
+      summary: "Get current config json"
+      description: "Returns the current configuration in JSON format"
+      operationId: "getConfigJson"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_configurations"
+  /api/v2/trigger/{direction}/{enable}:
+    get:
+      tags:
+      - "Configurations"
+      summary: "Move one of the device relays"
+      description: "This will activate one of the relays"
+      operationId: "trigger"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "direction"
+        in: "path"
+        description: "The direction you want to enable or disable"
+        required: true
+        type: "string"
+        enum: ["up","down","stop"]
+      - name: "enable"
+        in: "path"
+        description: "0 to disable it, 1 to enable it"
+        required: true
+        type: "integer"
+        format: "int64"
+        enum: [0,1]
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/shades/set-type:
+    post:
+      tags:
+      - "Configurations"
+      summary: "set shades type"
+      description: ""
+      operationId: "setShadesType"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/setShadesType"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/attach:
+    post:
+      tags:
+      - "Configurations"
+      summary: "set shades type"
+      description: ""
+      operationId: "attachConfig"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/attachConfig"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/timeguard:
+    post:
+      tags:
+      - "Configurations"
+      summary: "set timeguard for shades"
+      description: ""
+      operationId: "setTimeguard"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/timeGuard"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/ota-hour:
+    post:
+      tags:
+      - "Configurations"
+      summary: "set the hour to run auto updates"
+      description: "This set the hour to device for check and download the new firmware. The time is in 24h format"
+      operationId: "setOtaHour"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/setOta"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/thing:
+    put:
+      tags:
+      - "Configurations"
+      summary: "Edit the device"
+      description: "Edit the name, room and the property 'online' of the device"
+      operationId: "editDevice"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/editDevice"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/json_info"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/ir/send:
+    post:
+      tags:
+      - "IR"
+      summary: "Send IR command"
+      description: ""
+      operationId: "sendIR"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/irCmd"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+  /api/v2/ir/stop:
+    post:
+      tags:
+      - "IR"
+      summary: "Stop IR command"
+      description: ""
+      operationId: "stopIR"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/irStop"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
+            
+definitions:
+  editPingSensor:
+    type: "object"
+    properties: 
+      interval:
+        type: "number"
+        example: "20"
+      retry:
+        type: "number"
+        example: "20"
+      address:
+        type: "string"
+  pingSensorInfo:
+    type: "object"
+    properties: 
+      interval:
+        type: "number"
+      retry:
+        type: "number"
+      status:
+        type: "number"
+      address:
+        type: "string"
+  irCmd:
+    type: "object"
+    properties: 
+      chn:
+        type: "string"
+      cmd:
+        type: "string"
+  irStop:
+    type: "object"
+    properties: 
+      chn:
+        type: "string"
+        
+  editDevice:
+    type: "object"
+    properties: 
+      name:
+        type: "string"
+      room:
+        type: "string"
+      offline:
+        type: "boolean"
+        example: true
+  setOta:
+    type: "object"
+    properties:
+      time:
+        type: "string"
+        example: "02"
+  getTime:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      time:
+        type: "string"
+        example: "Fri Jan 25 13:14:19 2019"
+  fwVersion:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      version:
+        type: "string"
+        example: "2.0.0"
+  timeGuard:
+    type: "object"
+    properties:
+      timeguard:
+        type: "string"
+        example: "20"
+  attachConfig:
+    type: "object"
+    properties:
+      direction:
+        type: "string"
+        enum: ["up", "down", "stop"]
+      request:
+        type: "string"
+  setShadesType:
+    type: "object"
+    properties:
+      pr_and_hold:
+        type: "string"
+        enum: ["0","1"]
+      wire_type:
+        type: "string"
+        enum: ["1","2"]
+      shade_type:
+        type: "string"
+        enum: ["0","1","2","3","4","5"]
+  success_configurations:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      timeguard:
+        type: "string"
+        example: "50"
+      req_up:
+        type: "string"
+      req_down:
+        type: "string"
+      req_stop:
+        type: "string"
+      en_up:
+        type: "string"
+      en_down:
+        type: "string"
+      en_stop:
+        type: "string"
+      wire_type:
+        type: "string"
+      curt_type:
+        type: "string"
+      pr_n_hold:
+        type: "string"
+  allSchedules:
+    type: "array"
+    items:
+      type: 'object'
+      properties:
+        d: 
+          type: "array"
+          items:
+            type: "string"
+            example: [
+              "mo",
+              "tu",
+              "we",
+              "th",
+              "fr",
+              "sa",
+              "su"
+            ]
+        hh: 
+          type: "string"
+          example: "08"
+        mm: 
+          type: "string"
+          example: "04"
+        a: 
+          type: "string"
+          enum: ["o", "c"]
+        id: 
+          type: "string"
+          example: "1"
+  setSchedule:
+    type: "object"
+    properties:
+      d:
+        type: "string"
+        example: "['mo','we','su']"
+        enum: ["mo",
+        "tu",
+        "we",
+        "th",
+        "fr",
+        "sa",
+        "su"]
+      hh:
+        type: "string"
+        example: "08"
+      mm:
+        type: "string"
+        example: "00"
+      a:
+        type: "string"
+        example: "c"
+        enum: ["o", "c"]
+  successDeleteSchedule:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      ok: 
+        type: "string"
+        description: "deleted schedule id"
+        example: "1"
+  setScheduleRet:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      d:
+        type: "string"
+        example: "['mo','we','su']"
+        enum: ["mo",
+        "tu",
+        "we",
+        "th",
+        "fr",
+        "sa",
+        "su"]
+      hh:
+        type: "string"
+        example: "08"
+      mm:
+        type: "string"
+        example: "00"
+      a:
+        type: "string"
+        example: "c"
+        enum: ["o", "c"]
+  setWifi:
+    type: "object"
+    properties:
+      ssid:
+        type: "string"
+      password:
+        type: "string"
+      securityType:
+        type: "string"
+  networkScan:
+    type: "object"
+    properties:
+      mac_addr:
+        type: "string"
+      e_mac_addr:
+        type: "string"
+      ssid:
+        type: "array"
+        items:
+          type: "string"
+  info:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          _id: 
+            type: "string"
+          homeId: 
+            type: "string"
+          room: 
+            type: "string"
+          thingName: 
+            type: "string"
+          mac: 
+            type: "string"
+          type: 
+            type: "string"
+          apiVersion: 
+            type: "string"
+          mobile:
+            type: "boolean"
+            default: false
+          position:
+            type: "string"
+          draw:
+            type: "boolean"
+          connections:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                t:
+                  type: "string"
+          os:
+            type: "object"
+            properties:
+              n:
+                type: "string"
+              v:
+                type: "string"
+          hw:
+            type: "object"
+            properties:
+              n:
+                type: "string"
+              v:
+                type: "string"
+          commandLib:
+            type: "object"
+            properties:
+              moveForward:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                    example: "Bajar"
+                  url:
+                    type: "string"
+                    example: "/move/1"
+                  connectionType:
+                    type: "string"
+                    example: "ip"
+                  method:
+                    type: "string"
+                    example: "GET"
+              moveBackward:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                    example: "Subir"
+                  url:
+                    type: "string"
+                    example: "/move/0"
+                  connectionType:
+                    type: "string"
+                    example: "ip"
+                  method:
+                    type: "string"
+                    example: "GET"
+              stop:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                    example: "Stop"
+                  url:
+                    type: "string"
+                    example: "/stop"
+                  connectionType:
+                    type: "string"
+                    example: "ip"
+                  method:
+                    type: "string"
+                    example: "GET"
+              getSchedule:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                    example: "Calendario"
+                  url:
+                    type: "string"
+                    example: "/schedule/"
+                  connectionType:
+                    type: "string"
+                    example: "ip"
+                  method:
+                    type: "string"
+                    example: "GET"
+              removeSchedule:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                    example: "Borrar Calendario"
+                  url:
+                    type: "string"
+                    example: "/schedule/"
+                  useParams: 
+                    type: "boolean"
+                  connectionType:
+                    type: "string"
+                    example: "ip"
+                  method:
+                    type: "string"
+                    example: "DELETE"
+              createSchedule:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                    example: "Crear Calendario"
+                  url:
+                    type: "string"
+                    example: "/schedule/"
+                  connectionType:
+                    type: "string"
+                    example: "ip"
+                  method:
+                    type: "string"
+                    example: "POST"
+          graphics:
+            type: "object"
+            properties:
+              type: 
+                type: "string"
+                example: "menu"
+              icon: 
+                type: "string"
+                example: "shades"
+              family: 
+                type: "string"
+                example: "curtains"
+              graphicRepresentation: 
+                type: "string"
+                example: "custom_menu"
+              showInMenu: 
+                type: "boolean"
+              useMenuType: 
+                type: "boolean"
+              noBlocks: 
+                type: "boolean"
+  json_info:
+    type: "object"
+    properties:
+        _id: 
+          type: "string"
+        homeId: 
+          type: "string"
+        room: 
+          type: "string"
+        thingName: 
+          type: "string"
+        mac: 
+          type: "string"
+        type: 
+          type: "string"
+        apiVersion: 
+          type: "string"
+        mobile:
+          type: "boolean"
+          default: false
+        position:
+          type: "string"
+        draw:
+          type: "boolean"
+        connections:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              t:
+                type: "string"
+        os:
+          type: "object"
+          properties:
+            n:
+              type: "string"
+            v:
+              type: "string"
+        hw:
+          type: "object"
+          properties:
+            n:
+              type: "string"
+            v:
+              type: "string"
+        commandLib:
+          type: "object"
+          properties:
+            moveForward:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  example: "Bajar"
+                url:
+                  type: "string"
+                  example: "/move/1"
+                connectionType:
+                  type: "string"
+                  example: "ip"
+                method:
+                  type: "string"
+                  example: "GET"
+            moveBackward:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  example: "Subir"
+                url:
+                  type: "string"
+                  example: "/move/0"
+                connectionType:
+                  type: "string"
+                  example: "ip"
+                method:
+                  type: "string"
+                  example: "GET"
+            stop:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  example: "Stop"
+                url:
+                  type: "string"
+                  example: "/stop"
+                connectionType:
+                  type: "string"
+                  example: "ip"
+                method:
+                  type: "string"
+                  example: "GET"
+            getSchedule:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  example: "Calendario"
+                url:
+                  type: "string"
+                  example: "/schedule/"
+                connectionType:
+                  type: "string"
+                  example: "ip"
+                method:
+                  type: "string"
+                  example: "GET"
+            removeSchedule:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  example: "Borrar Calendario"
+                url:
+                  type: "string"
+                  example: "/schedule/"
+                useParams: 
+                  type: "boolean"
+                connectionType:
+                  type: "string"
+                  example: "ip"
+                method:
+                  type: "string"
+                  example: "DELETE"
+            createSchedule:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  example: "Crear Calendario"
+                url:
+                  type: "string"
+                  example: "/schedule/"
+                connectionType:
+                  type: "string"
+                  example: "ip"
+                method:
+                  type: "string"
+                  example: "POST"
+        graphics:
+          type: "object"
+          properties:
+            type: 
+              type: "string"
+              example: "menu"
+            icon: 
+              type: "string"
+              example: "shades"
+            family: 
+              type: "string"
+              example: "curtains"
+            graphicRepresentation: 
+              type: "string"
+              example: "custom_menu"
+            showInMenu: 
+              type: "boolean"
+            useMenuType: 
+              type: "boolean"
+            noBlocks: 
+              type: "boolean"
+  success_response:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+        default: true
+  success_false_response:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+        default: true
+      error:
+        type: "string"
+  ApiVersion: 
+    type: "object"
+    properties:
+      version:
+        type: "integer"
+        example: 2
