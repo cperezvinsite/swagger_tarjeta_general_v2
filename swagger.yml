@@ -9,7 +9,6 @@ info:
   license:
     name: "Closed"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "/"
 basePath: "/"
 tags:
 - name: "HTML"
