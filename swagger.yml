@@ -7,7 +7,7 @@ info:
   contact:
     email: "iot@insite.com.co"
   license:
-    name: "Closed"
+    name: "Closed."
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "/"
 basePath: "/"
