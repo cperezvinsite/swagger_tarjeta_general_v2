@@ -399,7 +399,7 @@ paths:
       parameters:
       - name: "direction"
         in: "path"
-        description: "The relay you want to move"
+        description: "The relay you want to move. In three wires engines, the direction 2 is not allowed"
         required: true
         type: "integer"
         format: "int64"
@@ -409,6 +409,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/success_response"
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_false_response"
   /api/v2/stop/:
     get:
       tags:
