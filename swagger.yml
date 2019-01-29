@@ -27,6 +27,8 @@ tags:
   description: "Get functions of device actions"
 - name: "IR"
   description: "IR commands"
+- name: "Light Sensor"
+  description: "Light Sensor"
 
 schemes:
 - "http"
@@ -36,6 +38,7 @@ paths:
     get:
       tags:
       - "HTML"
+      - "Configurations"
       summary: "Return the HTML of the configuration panel"
       description: "Here you can change the shades tipes. Set the timeout and configure the http requests."
       operationId: "getMainHTML"
@@ -45,11 +48,12 @@ paths:
       - "text/html"
       responses:
         200:
-          description: "Return HTML"
+          description: "&#60;html>&#60;/html>"
   /configurations:
     get:
       tags:
       - "HTML"
+      - "Configurations"
       summary: "Return the HTML of the WIFI configuration panel"
       description: "This screen is used to change the network configurations, such as the AP which the device is connected."
       operationId: "getConfigurationsHTML"
@@ -59,11 +63,12 @@ paths:
       - "text/html"
       responses:
         200:
-          description: "Return HTML"
+          description: "&#60;html>&#60;/html>"
   /schedule:
     get:
       tags:
       - "HTML"
+      - "Schedule"
       summary: "Return the HTML of schedule pannel"
       description: "In this screen you can modify the schedule of the shades. You can only have maximum 10 schedules"
       operationId: "getScheduleHTML"
@@ -73,11 +78,12 @@ paths:
       - "text/html"
       responses:
         200:
-          description: "Return HTML"
+          description: "&#60;html>&#60;/html>"
   /ping-sensor:
     get:
       tags:
       - "HTML"
+      - "Ping Sensor"
       summary: "Return the HTML of ping sensor"
       description: ""
       operationId: "getPingSensorHTML"
@@ -87,7 +93,22 @@ paths:
       - "text/html"
       responses:
         200:
-          description: "Return HTML"
+          description: "&#60;html>&#60;/html>"
+  /light-sensor:
+    get:
+      tags:
+      - "HTML"
+      - "Light Sensor"
+      summary: "Return the HTML of light sensor"
+      description: ""
+      operationId: "getLightSensorHTML"
+      consumes:
+      - "text/html"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "&#60;html>&#60;/html>"
   /api/v2/ping-sensor/info:
     get:
       tags:
@@ -647,8 +668,101 @@ paths:
           description: "This is an error"
           schema:
             $ref: "#/definitions/success_false_response"
-            
+  /api/v2/light-sensor:
+    get:
+      tags:
+      - "Light Sensor"
+      summary: "Get Light sensor info object"
+      description: "Return JSON of light sensor arguments"
+      operationId: "getLightSensor"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/light_sensor_info"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"  
+    put:
+      tags:
+      - "Light Sensor"
+      summary: "Set Light sensor arguments"
+      description: "Set the Light Sensor arguments"
+      operationId: "setLightSensor"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "The connection argumments"
+          required: true
+          schema:
+            $ref: "#/definitions/setLightSensor"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"  
 definitions:
+  setLightSensor:
+    type: "object"
+    properties:
+      thr_down:
+        type: "number"
+        example: 2000
+        description: "threshold to move down the shade"
+      thr_up:
+        type: "number"
+        example: 1000
+        description: "threshold to move up the shade"
+      mult:
+        type: "number"
+        example: 1.7
+        description: "miltiplicator factor to get exact value because of the device cover"
+      read_secs:
+        type: "number"
+        example: 30
+        description: "how many seconds is the interval to read the light sensor"
+      enable:
+        type: "boolean"
+        example: true
+        description: "send true to enable the sensor, false to disable"
+  light_sensor_info:
+    type: "object"
+    properties:
+      value:
+        type: "number"
+        example: -1
+        description: "value readed by the sensor through the cover"
+      valmult:
+        type: "number"
+        example: -1
+        description: "value readed by the sensor through the cover multiplied by the mult argument"
+      thr_down:
+        type: "number"
+        example: 0
+        description: "threshold to move down the shade"
+      thr_up:
+        type: "number"
+        example: 65535
+        description: "threshold to move up the shade"
+      mult:
+        type: "number"
+        example: 1.95
+        description: "miltiplicator factor to get exact value because of the device cover"
+      read_secs:
+        type: "number"
+        example: 30
+        description: "how many seconds is the interval to read the light sensor"
   editPingSensor:
     type: "object"
     properties: 
@@ -1211,7 +1325,7 @@ definitions:
     properties:
       success:
         type: "boolean"
-        default: true
+        default: false
       error:
         type: "string"
   ApiVersion: 
