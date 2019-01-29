@@ -5,6 +5,7 @@ info:
   title: "Tarjeta General"
   termsOfService: "http://insite.com.co/"
   contact:
+    name: IOT Support
     email: "iot@insite.com.co"
   license:
     name: "All rights reserved "
