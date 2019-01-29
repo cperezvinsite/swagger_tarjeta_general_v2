@@ -399,7 +399,7 @@ paths:
       parameters:
       - name: "direction"
         in: "path"
-        description: "The relay you want to move. In three wires engines, the direction 2 is not allowed"
+        description: "The relay you want to move. In three wires engines, the direction 2 is not allowed. Calling any direction will perfom a stop first"
         required: true
         type: "integer"
         format: "int64"
