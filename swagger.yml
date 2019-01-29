@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "This is the api for the Tarjeta General V2.X.X"
+  description: "This is the api for the Tarjeta General V2.X.X <br> This device is able to control 4 wires and 3 wires engines.<br>Developed By INSITE S.A.S<br><ul><li>Camilo Pérez Vélez</li><li>Alejandro Rosso Pérez</li><li>Leonardo Maya Iregui</li><li>David Mora Rodriguez</li>"
   version: "2.0.X"
   title: "Tarjeta General"
   termsOfService: "http://insite.com.co/"
@@ -10,9 +10,9 @@ info:
   license:
     name: "All rights reserved "
     url: "http://www.insite.com.co"
-  externalDocs:
-    description: Find out more
-    url: https://insite.com.co/wp-content/uploads/2019/01/FICHA-TECNICA-TARJETA-GENERAL-V2-1.pdf
+externalDocs:
+  description: Find out more docs
+  url: https://insite.com.co/wp-content/uploads/2019/01/FICHA-TECNICA-TARJETA-GENERAL-V2-1.pdf
 basePath: "/"
 tags:
 - name: "HTML"
