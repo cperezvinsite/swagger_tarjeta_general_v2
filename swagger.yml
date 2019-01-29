@@ -9,6 +9,9 @@ info:
   license:
     name: "All rights reserved "
     url: "http://www.insite.com.co"
+  externalDocs:
+    description: Find out more
+    url: https://insite.com.co/wp-content/uploads/2019/01/FICHA-TECNICA-TARJETA-GENERAL-V2-1.pdf
 basePath: "/"
 tags:
 - name: "HTML"
