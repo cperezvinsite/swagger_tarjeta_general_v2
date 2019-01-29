@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "This is the api for the Tarjeta General V2.X.X <br> This device is able to control 4 wires and 3 wires engines.<br>Developed By INSITE S.A.S<br><ul><li>Camilo Pérez Vélez</li><li>Alejandro Rosso Pérez</li><li>Leonardo Maya Iregui</li><li>David Mora Rodriguez</li>"
+  description: "This is the api for the Tarjeta General V2.X.X <br> This device is able to control 4 wires and 3 wires engines.<br>Developed By INSITE S.A.S - <b>I+D Team</b><br><ul><li>Camilo Pérez Vélez</li><li>Alejandro Rosso Pérez</li><li>Leonardo Maya Iregui</li><li>David Mora Rodriguez</li>"
   version: "2.0.X"
   title: "Tarjeta General"
   termsOfService: "http://insite.com.co/"
@@ -159,7 +159,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/editPingSensor"
@@ -310,7 +310,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/setWifi"
@@ -350,7 +350,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/setSchedule"
@@ -501,7 +501,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/setShadesType"
@@ -528,7 +528,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/attachConfig"
@@ -555,7 +555,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/timeGuard"
@@ -582,7 +582,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/setOta"
@@ -609,7 +609,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/editDevice"
@@ -636,7 +636,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/irCmd"
@@ -663,7 +663,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/irStop"
@@ -707,7 +707,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "The connection argumments"
+          description: "required body arguments"
           required: true
           schema:
             $ref: "#/definitions/setLightSensor"
@@ -798,13 +798,16 @@ definitions:
     properties: 
       chn:
         type: "string"
+        example: "0"
       cmd:
         type: "string"
+        example: "100000,5,3,1,2,3,4,5,6,7,8,9,10"
   irStop:
     type: "object"
     properties: 
       chn:
         type: "string"
+        example: "0"
         
   editDevice:
     type: "object"
