@@ -541,6 +541,31 @@ paths:
           description: "This is an error"
           schema:
             $ref: "#/definitions/success_false_response"
+  /api/v2/timeguard/{status}:
+    get:
+      tags:
+      - "Configurations"
+      summary: "Enable or disable the timeguard of relays"
+      description: "Enable or disable the timeguard of relays"
+      operationId: "timeguardStatus"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "status"
+        in: "path"
+        description: "The status to set the timeguard"
+        required: true
+        type: "string"
+        enum: ["enable","disable"]
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/success_response"
+        201:
+          description: "This is an error"
+          schema:
+            $ref: "#/definitions/success_false_response"
   /api/v2/timeguard:
     post:
       tags:
@@ -893,6 +918,10 @@ definitions:
         type: "string"
       pr_n_hold:
         type: "string"
+      timeguard_stat:
+        type: "string"
+        description: "1 if timeguar is enable, 0 if not"
+        enum: ["1", "0"]
   allSchedules:
     type: "array"
     items:
